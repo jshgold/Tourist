@@ -1,0 +1,12 @@
+{% extends 'member/member_base.html' %}
+
+
+{% block title %}
+<title>로그인</title>
+{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'members:signup' %}" class="btn btn-primary">회원가입</a>
+
+{% endblock %}
