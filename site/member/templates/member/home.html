@@ -1,0 +1,17 @@
+{% extends 'member/member_base.html' %}
+
+{% block title %}
+<title>HOME</title>
+{% endblock %}
+
+
+{% block content %}
+{% if request.session.user %}
+    {{request.session.user}}
+    <br>
+    <a href="{% url 'members:signout' %}" class="btn btn-primary">로그아웃</a>
+{% else %}
+    <a href="{% url 'members:signin' %}" class="btn btn-primary">로그인</a>
+{% endif %}
+{% endblock %}
+
