@@ -1,9 +1,12 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.hashers import make_password,check_password
 from django.http import HttpResponse
+from django.db import connection
 from .models import User
+from content.models import Content
 import datetime
 import requests
+
 
 def signup(request):
     if request.method == 'GET':
@@ -64,13 +67,37 @@ def signin(request):
 
 
 def home(request):
-    user_id = request.session.get('user')
+    lst=[]
+    try:
+        cursor = connection.cursor()
 
-    if user_id:
-        user = User.objects.get(pk=user_id)
-        return render(request,'member/home.html')
+        strSql = "SELECT spot,cont,tourimg,dep"
+        result = cursor.execute(strSql)
+        datas = cursor.fetchall()
+
+        connection.commit()
+        connection.close()
+
+        
+        for data in datas:
+            row = {
+                'spot' : data[0],
+                'cont': data[1],
+                'tourimg': data[2],
+                'dep': data[3]
+                }
+            lst.append(row)
     
-    return render(request,'member/home.html')
+    except:
+        connection.rollback()
+        print("failed")
+
+    return render(request, 'member/home.html',{'datas':lst})
+
+
+        
+    
+    
 
 
 def signout(request):

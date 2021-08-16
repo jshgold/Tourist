@@ -1,0 +1,19 @@
+{% extends 'member/member_base.html' %}
+
+{% block title %}
+<title>data</title>
+{% endblock %}
+
+
+{% block content %}
+{% for data in lst %}
+    
+    <ul>
+        {{ data }}
+        <li><img src="{{data.tourimg}}" alt="{{data}}"></li>
+        <li>{{data.cont}}</li>
+        <li>{{data.dep}}</li>     
+    </ul>
+
+{% endfor %}
+{% endblock %}
