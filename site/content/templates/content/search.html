@@ -1,0 +1,27 @@
+{% extends 'member/member_base.html' %}
+
+{% block title %}
+
+<title>Search</title>
+
+{% endblock %}
+
+{% block content %}
+
+<select>
+    <option value="">지역</option>
+    {% for search in searchs %}
+    <option value="{{ search }}">{{ search }}</option>
+    {% endfor %}
+    
+    <!--jsp 벨류
+        function getSelectValue(frm)
+    {
+     frm.textValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].text;
+     frm.optionValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].value;
+    }--> 
+        
+
+</select>
+
+{% endblock %}

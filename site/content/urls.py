@@ -5,5 +5,6 @@ from . import views
 apps_name="content"
 
 urlpatterns=[
-    path('ho/',views.home,name="ho"),
+    path('tourlist/',views.tourlist,name="tourlist"),
+    path('search/',views.search,name="search")
 ]
