@@ -2,7 +2,7 @@
 from django.urls import path
 from . import views
 
-apps_name="content"
+apps_name="contents"
 
 urlpatterns=[
     path('tourlist/',views.tourlist,name="tourlist"),

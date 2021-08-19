@@ -8,7 +8,9 @@
 
 {% block content %}
 
-<select>
+
+<form name="form">
+<select class="place">
     <option value="">지역</option>
     {% for search in searchs %}
     <option value="{{ search }}">{{ search }}</option>
@@ -23,5 +25,26 @@
         
 
 </select>
+<select class="ye">
+    <option value="">연도</option>
+    {% for year in years %}
+    <option value="{{ year }}">{{ year }}</option>
+    {% endfor %}
+</select>
+
+<select class="month">
+    <option value="">월</option>
+    {% for month in monthes %}
+    <option value="{{ month }}">{{ month }}</option>
+    {% endfor %}
+</select>
+<script>
+    let target = document.getElementsByClassName("ye");
+    target = target.options[target.selectedIndex].value;
+    console.log(target);
+    
+</script>
+옵션값: <input type="text" name="optionValue">
+</form>
 
 {% endblock %}

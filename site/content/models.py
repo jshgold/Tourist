@@ -6,6 +6,9 @@ class Content(models.Model):
     cont = models.TextField(verbose_name="content")
     tourimg = models.CharField(max_length=100,verbose_name="image")
     dep = models.CharField(max_length=100,verbose_name="place")
+    yea = models.IntegerField(null=True,verbose_name="year")
+    mont = models.IntegerField(null=True,verbose_name="month")
+
 
     def __str__(self):
         return self.spot

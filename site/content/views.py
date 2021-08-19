@@ -34,6 +34,8 @@ def tourlist(request):
 
 def search(request):
     juso=[]
+    year=[]
+    month=[]
     con = pymysql.connect(host="127.0.0.1",user="root",password="1234",db="site",charset="utf8")
     cur = con.cursor()
     sql = "SELECT dep FROM datas"
@@ -62,10 +64,39 @@ def search(request):
         elif row.startswith("전남"):
             row=row.replace(row[:space],"전라남도")
             space=row.find(" ")
+        elif row.startswith("서울시"):
+            row=row.replace(row[:space],"서울특별시")
+            space=row.find(" ")
+        elif row.startswith("제주도"):
+            row=row.replace(row[:space],"제주시")
+            space=row.find(" ")
 
         if row[:space] not in juso:
             juso.append(row[:space])
-
-    return render(request, 'content/search.html',{"searchs":juso})
+    cur = con.cursor()
+    sql = "SELECT yea FROM datas"
+    cur.execute(sql)
+    while(True):
+        row=cur.fetchone()
+        if row==None:
+            break
+        row=row[0]
+        if row not in year:
+            year.append(row)
+    
+    cur = con.cursor()
+    sql = "SELECT mont FROM datas"
+    cur.execute(sql)
+    while(True):
+        row=cur.fetchone()
+        if row==None:
+            break
+        row=row[0]
+        if row not in month:
+            month.append(row)
+    juso.sort()
+    month.sort()
+    year.sort()
+    return render(request, 'content/search.html',{"searchs":juso,"years":year,"monthes":month})
 
 
