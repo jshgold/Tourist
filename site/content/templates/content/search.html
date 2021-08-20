@@ -8,43 +8,58 @@
 
 {% block content %}
 
+<script>
+function getSelectValue(frm){
+    
+    frm.PlaceValue.value = frm.place.options[frm.place.selectedIndex].value;
+    frm.YearValue.value = frm.ye.options[frm.ye.selectedIndex].value;
+    frm.MonthValue.value = frm.month.options[frm.month.selectedIndex].value;
+    
+    
+}
 
-<form name="form">
-<select class="place">
+function doAction(){
+    let form = document.mForm;
+    let place = form.PlaceValue.value
+    let year = form.YearValue.value
+    let month = form.MonthValue.value
+    
+   console.log(place,year,month)
+
+    
+}
+
+
+    
+</script>
+<form name="mForm">
+<select class="place" id="place" name= "place" onChange="getSelectValue(this.form);" >
     <option value="">지역</option>
     {% for search in searchs %}
     <option value="{{ search }}">{{ search }}</option>
     {% endfor %}
     
-    <!--jsp 벨류
-        function getSelectValue(frm)
-    {
-     frm.textValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].text;
-     frm.optionValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].value;
-    }--> 
-        
-
 </select>
-<select class="ye">
+
+<select class="ye" id="ye" name= "ye" onChange="getSelectValue(this.form);">
     <option value="">연도</option>
     {% for year in years %}
     <option value="{{ year }}">{{ year }}</option>
     {% endfor %}
 </select>
 
-<select class="month">
+<select class="month" id="month" name= "month" onChange="getSelectValue(this.form);">
     <option value="">월</option>
     {% for month in monthes %}
     <option value="{{ month }}">{{ month }}</option>
     {% endfor %}
 </select>
-<script>
-    let target = document.getElementsByClassName("ye");
-    target = target.options[target.selectedIndex].value;
-    console.log(target);
-    
-</script>
-옵션값: <input type="text" name="optionValue">
+
+<input type="hidden" name="PlaceValue">
+<input type="hidden" name="YearValue">
+<input type="hidden" name="MonthValue">
+
+<button type="submit" onclick="doAction();">검색</button>
 </form>
 
 {% endblock %}
