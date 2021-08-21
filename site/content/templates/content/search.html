@@ -16,25 +16,15 @@ function getSelectValue(frm){
     frm.MonthValue.value = frm.month.options[frm.month.selectedIndex].value;
     
     
-}
-
-function doAction(){
-    let form = document.mForm;
-    let place = form.PlaceValue.value
-    let year = form.YearValue.value
-    let month = form.MonthValue.value
-    
-   console.log(place,year,month)
-
-    
-}
+};
 
 
-    
 </script>
-<form name="mForm">
+<form name="mForm" method="POST" >
+    {% csrf_token %}
+
 <select class="place" id="place" name= "place" onChange="getSelectValue(this.form);" >
-    <option value="">지역</option>
+    <option value="" >지역</option>
     {% for search in searchs %}
     <option value="{{ search }}">{{ search }}</option>
     {% endfor %}
@@ -55,11 +45,11 @@ function doAction(){
     {% endfor %}
 </select>
 
-<input type="hidden" name="PlaceValue">
-<input type="hidden" name="YearValue">
-<input type="hidden" name="MonthValue">
+<input type="hidden" name="PlaceValue" id="PlaceValue">
+<input type="hidden" name="YearValue" id="YearValue">
+<input type="hidden" name="MonthValue" id="MonthValue">
 
-<button type="submit" onclick="doAction();">검색</button>
+<button type="submit">검색</button>
 </form>
 
 {% endblock %}

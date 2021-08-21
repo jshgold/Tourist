@@ -9,10 +9,7 @@
 {% if request.session.user %}
     {{request.session.user}}
     <br>
-    {% for data in lst %}
-
-    <li>{{ data.spot }}</li>
-    {% endfor %}
+    
 
     <a href="{% url 'members:signout' %}" class="btn btn-primary">로그아웃</a>
 

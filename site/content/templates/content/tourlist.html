@@ -6,14 +6,16 @@
 
 
 {% block content %}
-{% for data in lst %}
-    
-    <ul>
-        {{ data }}
-        <li><img src="{{data.tourimg}}" alt="{{data}}"></li>
-        <li>{{data.cont}}</li>
-        <li>{{data.dep}}</li>     
-    </ul>
 
-{% endfor %}
+    
+    
+            <ul>
+                {{place}}
+                <li><img src="{{tourimg}}" alt="{{place}}"></li>
+                <li>{{cont}}</li>
+                <li>{{dep}}</li>     
+            </ul>
+    
+
+
 {% endblock %}
