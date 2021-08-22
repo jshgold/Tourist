@@ -10,6 +10,7 @@ def tourlist(request):
         data= Content.objects.filter(yea=2010)
 
 def search(request):
+            
     if request.method == 'GET':
         juso=[]
         year=[]
@@ -82,26 +83,59 @@ def search(request):
         return render(request, 'content/search.html',{"searchs":juso,"years":year,"monthes":month})
 
     elif request.method =="POST":
-        do=[]
-        place = request.POST.get('PlaceValue')+'%'
-        year = request.POST.get('YearValue')
-        month = request.POST.get('MonthValue')
+        plist=[]
+        clist=[]
+        tlist=[]
+        dlist=[]
+        
+        place = request.POST.get('place')+'%'
+        year = request.POST.get('ye')
+        month = request.POST.get('month')
         con = pymysql.connect(host="127.0.0.1" ,user="root" ,password="1234" ,db="site",charset="utf8")
         cur = con.cursor()
-        sql = "SELECT * FROM datas WHERE yea=%s and mont=%s and dep LIKE %s"
-        cur.execute(sql,(year,month,place))
-        row = cur.fetchall()
-        for ro in row:
-            place=ro[0]
-            cont = ro[1]
-            tourimg = ro[2]
-            dep = ro[3]
-
+        if month and place and year=='':
+            sql= "SELECT * FROM datas WHERE mont=%s and dep LIKE %s"
+            cur.execute(sql,(month,place))    
+            row = cur.fetchall()
+        elif year and place and month=='':
+            sql= "SELECT * FROM datas WHERE yea=%s and dep LIKE %s"
+            cur.execute(sql,(year,place))    
+            row = cur.fetchall()
+        elif year and month and place=='':
+            sql= "SELECT * FROM datas WHERE yea=%s and mont=%s"
+            cur.execute(sql,(year,month))    
+            row = cur.fetchall()
+        elif place=='' and month=='' and year:
+            sql= "SELECT * FROM datas WHERE yea=%s "
+            cur.execute(sql,(year))    
+            row = cur.fetchall()
+        elif year=='' and month=='' and place:
+            sql= "SELECT * FROM datas WHERE dep LIKE %s "
+            cur.execute(sql,(place))    
+            row = cur.fetchall()
         
-        return render(request,'content/tourlist.html',{"place":place,"cont":cont,"tourimg":tourimg,"dep":dep})
+        else:   
+            sql = "SELECT * FROM datas WHERE yea=%s and mont=%s and dep LIKE %s"
+            cur.execute(sql,(year,month,place))
+            row = cur.fetchall()
+
+        for ro in row:
+            plist.append(ro[0])
+            clist.append(ro[1])
+            tlist.append(ro[2])
+            dlist.append(ro[3])
+        
+        counts=len(plist)
+        total=[[] for _ in range(counts)]
+        for count in range(counts):
+            total[count].append(plist[count])
+            total[count].append(clist[count])
+            total[count].append(tlist[count])
+            total[count].append(dlist[count])
+        
+        return render(request,'content/tourlist.html',{"places":total})
             
 
-        
 
         
 

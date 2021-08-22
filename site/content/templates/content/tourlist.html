@@ -6,16 +6,17 @@
 
 
 {% block content %}
-
+{% for place in places %}
+    {% for pl in place %}
+        {% if "https://" in pl %}
+            <img src="{{ pl }}">
+        {% else %}
+            <p>{{ pl }}
+            <br>
+            
+        {% endif %}
     
-    
-            <ul>
-                {{place}}
-                <li><img src="{{tourimg}}" alt="{{place}}"></li>
-                <li>{{cont}}</li>
-                <li>{{dep}}</li>     
-            </ul>
-    
-
+    {% endfor %}
+{% endfor %}
 
 {% endblock %}
