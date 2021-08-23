@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Content
 import pymysql
+import random
 
 def tourlist(request):
     if request.method=='GET':
@@ -12,75 +13,78 @@ def tourlist(request):
 def search(request):
             
     if request.method == 'GET':
-        juso=[]
-        year=[]
-        month=[]
-        con = pymysql.connect(host="127.0.0.1",user="root",password="1234",db="site",charset="utf8")
-        cur = con.cursor()
-        sql = "SELECT dep FROM datas"
-        cur.execute(sql)
-        while(True):
-            row=cur.fetchone()
-            if row==None:
-                break
-            row=row[0]
-            space=row.find(" ")
-            if row.startswith("충북"):
-                row=row.replace(row[:space],"충청북도")
+        if request.session.get('user',''):
+            juso=[]
+            year=[]
+            month=[]
+            con = pymysql.connect(host="127.0.0.1",user="root",password="1234",db="site",charset="utf8")
+            cur = con.cursor()
+            sql = "SELECT dep FROM datas"
+            cur.execute(sql)
+            while(True):
+                row=cur.fetchone()
+                if row==None:
+                    break
+                row=row[0]
                 space=row.find(" ")
-            elif row.startswith("충남"):
-                row=row.replace(row[:space],"충청남도")
-                space=row.find(" ")
-            elif row.startswith("경북"):
-                row=row.replace(row[:space],"경상북도")
-                space=row.find(" ")
-            elif row.startswith("경남"):
-                row=row.replace(row[:space],"경상남도")
-                space=row.find(" ")
-            elif row.startswith("전북"):
-                row=row.replace(row[:space],"전라북도")
-                space=row.find(" ")
-            elif row.startswith("전남"):
-                row=row.replace(row[:space],"전라남도")
-                space=row.find(" ")
-            elif row.startswith("서울"):
-                row=row.replace(row[:space],"서울특별시")
-                space=row.find(" ")
+                if row.startswith("충북"):
+                    row=row.replace(row[:space],"충청북도")
+                    space=row.find(" ")
+                elif row.startswith("충남"):
+                    row=row.replace(row[:space],"충청남도")
+                    space=row.find(" ")
+                elif row.startswith("경북"):
+                    row=row.replace(row[:space],"경상북도")
+                    space=row.find(" ")
+                elif row.startswith("경남"):
+                    row=row.replace(row[:space],"경상남도")
+                    space=row.find(" ")
+                elif row.startswith("전북"):
+                    row=row.replace(row[:space],"전라북도")
+                    space=row.find(" ")
+                elif row.startswith("전남"):
+                    row=row.replace(row[:space],"전라남도")
+                    space=row.find(" ")
+                elif row.startswith("서울"):
+                    row=row.replace(row[:space],"서울특별시")
+                    space=row.find(" ")
 
-            elif row.startswith("제주"):
-                row=row.replace(row[:space],"제주시")
-                space=row.find(" ")
-            elif row.startswith("강원"):
-                row=row.replace(row[:space],"강원도")
-                space=row.find(" ")
+                elif row.startswith("제주"):
+                    row=row.replace(row[:space],"제주시")
+                    space=row.find(" ")
+                elif row.startswith("강원"):
+                    row=row.replace(row[:space],"강원도")
+                    space=row.find(" ")
 
-            if row[:space] not in juso:
-                juso.append(row[:space])
-        cur = con.cursor()
-        sql = "SELECT yea FROM datas"
-        cur.execute(sql)
-        while(True):
-            row=cur.fetchone()
-            if row==None:
-                break
-            row=row[0]
-            if row not in year:
-                year.append(row)
+                if row[:space] not in juso:
+                    juso.append(row[:space])
+            cur = con.cursor()
+            sql = "SELECT yea FROM datas"
+            cur.execute(sql)
+            while(True):
+                row=cur.fetchone()
+                if row==None:
+                    break
+                row=row[0]
+                if row not in year:
+                    year.append(row)
 
-        cur = con.cursor()
-        sql = "SELECT mont FROM datas"
-        cur.execute(sql)
-        while(True):
-            row=cur.fetchone()
-            if row==None:
-                break
-            row=row[0]
-            if row not in month:
-                month.append(row)
-        juso.sort()
-        month.sort()
-        year.sort()
-        return render(request, 'content/search.html',{"searchs":juso,"years":year,"monthes":month})
+            cur = con.cursor()
+            sql = "SELECT mont FROM datas"
+            cur.execute(sql)
+            while(True):
+                row=cur.fetchone()
+                if row==None:
+                    break
+                row=row[0]
+                if row not in month:
+                    month.append(row)
+            juso.sort()
+            month.sort()
+            year.sort()
+            return render(request, 'content/search.html',{"searchs":juso,"years":year,"monthes":month})
+        else:
+            return redirect('/signin')
 
     elif request.method =="POST":
         plist=[]
@@ -88,9 +92,11 @@ def search(request):
         tlist=[]
         dlist=[]
         
-        place = request.POST.get('place')+'%'
-        year = request.POST.get('ye')
-        month = request.POST.get('month')
+        place = request.POST.get('place','')+'%'
+        year = request.POST.get('ye','')
+        month = request.POST.get('month','')
+        
+
         con = pymysql.connect(host="127.0.0.1" ,user="root" ,password="1234" ,db="site",charset="utf8")
         cur = con.cursor()
         if month and place and year=='':
@@ -105,16 +111,22 @@ def search(request):
             sql= "SELECT * FROM datas WHERE yea=%s and mont=%s"
             cur.execute(sql,(year,month))    
             row = cur.fetchall()
-        elif place=='' and month=='' and year:
+        elif year and place==month :
             sql= "SELECT * FROM datas WHERE yea=%s "
             cur.execute(sql,(year))    
             row = cur.fetchall()
-        elif year=='' and month=='' and place:
+        elif place and year==month:
             sql= "SELECT * FROM datas WHERE dep LIKE %s "
             cur.execute(sql,(place))    
             row = cur.fetchall()
         
-        else:   
+        elif month and year==place:
+            sql= "SELECT * FROM datas WHERE month=%s "
+            cur.execute(sql,(month))    
+            row = cur.fetchall()
+
+        
+        elif place !='' and month!='' and year!='':   
             sql = "SELECT * FROM datas WHERE yea=%s and mont=%s and dep LIKE %s"
             cur.execute(sql,(year,month,place))
             row = cur.fetchall()
@@ -133,7 +145,29 @@ def search(request):
             total[count].append(tlist[count])
             total[count].append(dlist[count])
         
-        return render(request,'content/tourlist.html',{"places":total})
+        return render(request,'content/result.html',{"places":total})
+
+def home(request):
+    
+    con = pymysql.connect(host="127.0.0.1" ,user="root" ,password="1234" ,db="site",charset="utf8")
+    cur = con.cursor()
+    sql = 'SELECT tourimg FROM datas'
+    cur.execute(sql)
+    row=list(cur.fetchall())
+    random.shuffle(row)
+    lst=[]
+    count=0
+    for ro in row:
+        if count==6:
+            break
+        lst.append(ro)
+        count+=1
+
+    
+    
+
+    
+    return render(request,"content/home.html",{"rows":lst})
             
 
 

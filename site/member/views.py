@@ -35,6 +35,7 @@ def signup(request):
                 updated_at=datetime.datetime.now()
             )
             user.save()
+            return redirect('/signin')
 
         return render(request, 'member/signup.html',res_data)
 
@@ -65,16 +66,6 @@ def signin(request):
         
         return render(request , 'member/signin.html',res_data)
 
-
-def home(request):
-    
-
-    return render(request, 'member/home.html')
-
-
-        
-    
-    
 
 
 def signout(request):

@@ -1,4 +1,4 @@
-{% extends 'member/member_base.html' %}
+{% extends 'member/base.html' %}
 
 {% block title %}
 
@@ -20,10 +20,11 @@ function getSelectValue(frm){
 
 
 </script>
+{% if request.session.user %}
 <form name="mForm" method="POST" >
     {% csrf_token %}
 
-<select class="place" id="place" name= "place" onChange="getSelectValue(this.form);" >
+<select class="place" id="place" name= "place"  >
     <option value="" >지역</option>
     {% for search in searchs %}
     <option value="{{ search }}">{{ search }}</option>
@@ -31,14 +32,14 @@ function getSelectValue(frm){
     
 </select>
 
-<select class="ye" id="ye" name= "ye" onChange="getSelectValue(this.form);">
+<select class="ye" id="ye" name= "ye" >
     <option value="">연도</option>
     {% for year in years %}
     <option value="{{ year }}">{{ year }}</option>
     {% endfor %}
 </select>
 
-<select class="month" id="month" name= "month" onChange="getSelectValue(this.form);">
+<select class="month" id="month" name= "month" >
     <option value="">월</option>
     {% for month in monthes %}
     <option value="{{ month }}">{{ month }}</option>
@@ -51,5 +52,8 @@ function getSelectValue(frm){
 -->
 <button type="submit">검색</button>
 </form>
+{% else %}
+<p>없음</p>
+{% endif %}
 
 {% endblock %}

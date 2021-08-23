@@ -1,4 +1,4 @@
-{% extends 'member/member_base.html' %}
+{% extends 'member/base.html' %}
 
 {% block title %}
 <title>HOME</title>
@@ -7,9 +7,15 @@
 
 {% block content %}
 {% if request.session.user %}
-    {{request.session.user}}
+    {{request.session.user}} 님 안녕하세요
     <br>
-    
+    {% for row in rows %}
+        {% for ro in row %}
+            
+            <p><img src='{{ ro }}'></p>
+            
+        {% endfor %}
+    {% endfor %} 
 
     <a href="{% url 'members:signout' %}" class="btn btn-primary">로그아웃</a>
 
