@@ -92,29 +92,37 @@ def search(request):
         tlist=[]
         dlist=[]
         
-        place = request.POST.get('place','')+'%'
-        year = request.POST.get('ye','')
-        month = request.POST.get('month','')
+        place = request.POST.get('place',"")+'%'
+        year = request.POST.get('ye',"")
+        month = request.POST.get('month',"")
         
 
         con = pymysql.connect(host="127.0.0.1" ,user="root" ,password="1234" ,db="site",charset="utf8")
         cur = con.cursor()
-        if month and place and year=='':
+
+        if place=="%" and month=="" and year=="":
+            return redirect('/')
+
+        elif month and place and year=="":
             sql= "SELECT * FROM datas WHERE mont=%s and dep LIKE %s"
             cur.execute(sql,(month,place))    
             row = cur.fetchall()
-        elif year and place and month=='':
+
+        elif year and place and month=="":
             sql= "SELECT * FROM datas WHERE yea=%s and dep LIKE %s"
             cur.execute(sql,(year,place))    
             row = cur.fetchall()
-        elif year and month and place=='':
+
+        elif year and month and place=="%":
             sql= "SELECT * FROM datas WHERE yea=%s and mont=%s"
             cur.execute(sql,(year,month))    
             row = cur.fetchall()
+
         elif year and place==month :
             sql= "SELECT * FROM datas WHERE yea=%s "
             cur.execute(sql,(year))    
             row = cur.fetchall()
+
         elif place and year==month:
             sql= "SELECT * FROM datas WHERE dep LIKE %s "
             cur.execute(sql,(place))    
@@ -126,10 +134,12 @@ def search(request):
             row = cur.fetchall()
 
         
-        elif place !='' and month!='' and year!='':   
+        elif place !="" and month!="" and year!="":   
             sql = "SELECT * FROM datas WHERE yea=%s and mont=%s and dep LIKE %s"
             cur.execute(sql,(year,month,place))
             row = cur.fetchall()
+        
+        
 
         for ro in row:
             plist.append(ro[0])
@@ -151,7 +161,7 @@ def home(request):
     
     con = pymysql.connect(host="127.0.0.1" ,user="root" ,password="1234" ,db="site",charset="utf8")
     cur = con.cursor()
-    sql = 'SELECT tourimg FROM datas'
+    sql = 'SELECT tourimg,spot FROM datas'
     cur.execute(sql)
     row=list(cur.fetchall())
     random.shuffle(row)

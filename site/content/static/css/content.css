@@ -1,0 +1,13 @@
+.wow{
+    color : #FCA205;
+}
+.child {
+    float : left; padding: 10px; width: 33%;
+}
+
+.myimage {
+    
+    width: 50%; 
+    margin-left: 20px; margin-bottom: 20px;
+    border: 5px double #87C540;
+    }
