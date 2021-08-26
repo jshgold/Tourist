@@ -1,13 +1,65 @@
-.wow{
-    color : #FCA205;
-}
-.child {
-    float : left; padding: 10px; width: 33%;
+header {
+    background-color: rgb(145, 212, 44);
+    color : blue;
+    display: flex;
+    justify-content: space-between;
+   
+    
+    
+    
 }
 
-.myimage {
-    
-    width: 50%; 
-    margin-left: 20px; margin-bottom: 20px;
+
+.container {
+
+        background:beige;
+        
+        width: 50%;
+        display : flex;
+        flex-direction: column;
+        
+        margin-bottom: 20px; margin-top:20px; margin-left: 20px;
+      
+
+      }
+
+.item {
+    color : rgb(116, 10, 126);
+    background-color: hotpink;
+    width: 100%; 
+    margin-left: 5px; margin-bottom: 20px; margin-top:20px;
     border: 5px double #87C540;
-    }
+    display : flex;
+    flex-direction: column;
+}
+
+.btn {
+    width: 100px;
+    color: black;
+    
+    
+    
+}
+
+h1 {
+    display : inline-block;
+    
+}
+
+
+#sign {
+    display : inline-block;
+    margin-top : 6px;
+    margin-right : 6px;
+    
+}
+
+
+body {
+    background-color: seagreen;
+}
+
+
+.butt {
+    background-color: blue;
+}
