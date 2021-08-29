@@ -25,18 +25,19 @@
     
     {% for row in rows %}
         <li class="item">
+          <a href="">
             
-        {% for ro in row %}
+            {% for ro in row %}
             
             {% if 'https://' in ro %}
             <img src='{{ ro }}'>
             {% else %}
             <br>
-            {{ ro }}
+            <p id="spotname">{{ ro }}</p>
             {% endif %}
         
-        {% endfor %}
-    
+            {% endfor %}
+          </a>
         </li>
     {% endfor %} 
     </ul>   

@@ -6,17 +6,22 @@
 
 
 {% block content %}
-{% for place in places %}
-    {% for pl in place %}
-        {% if "https://" in pl %}
+<ul class="container">
+  {% for place in places %}
+    <li class="item">
+      <a href="">
+        {% for pl in place %}
+          {% if "https://" in pl %}
             <img src="{{ pl }}">
-        {% else %}
-            <p>{{ pl }}
-            <br>
-            
-        {% endif %}
-    
-    {% endfor %}
-{% endfor %}
+          {% else %}
+            <p id="spotname">{{ pl }}</p>
+            <br>    
+          {% endif %}
+        
+        {% endfor %} 
+      </a>
+    </li>
+  {% endfor %}
+</ul>
 
 {% endblock %}
