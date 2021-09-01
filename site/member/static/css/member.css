@@ -3,6 +3,7 @@
     padding : 0px;
     text-decoration: none;
     font-family: sans-serif;
+    box-sizing: border-box;
 }
 
 
@@ -60,7 +61,7 @@
 }
 
 
-.btn {
+#signbtn {
     position: relative;
     left: 40%;
     transform: translateX(-50%);

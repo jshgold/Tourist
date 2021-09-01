@@ -9,16 +9,48 @@
 
 {% block content %}
 <header>
+
+  <div class="title">
     <h1><a href="{% url 'contents:home' %}" id="title">전국 축제</a></h1>
-    <div id="sign">
-    {% if request.session.user %}
-    {{request.session.user}} 님 안녕하세요
-    <a href="{% url 'members:signout' %}" class="btn btn-primary">로그아웃</a>
+  </div>
+
+  <div class="search">
+    <form name="mForm" method="POST" >
+      {% csrf_token %}
     
-    {% else %}
-    <a href="{% url 'members:signin' %}" class="btn btn-primary">로그인</a>
-    {% endif %}
+      <select class="place" id="place" name= "place"  >
+        <option value="" >지역</option>
+        {% for search in searchs %}
+        <option value="{{ search }}">{{ search }}</option>
+        {% endfor %} 
+      </select>
+    
+      <select class="ye" id="ye" name= "ye" >
+        <option value="">연도</option>
+        {% for year in years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+      </select>
+      
+      <select class="month" id="month" name= "month" >
+        <option value="">월</option>
+        {% for month in monthes %}
+        <option value="{{ month }}">{{ month }}</option>
+        {% endfor %}
+      </select>
+        <button type="submit" class="butt"><i class="fas fa-search"></i></button>
+      </form>
     </div>
+    <div class="si">
+      {% if request.session.user %}
+      {{request.session.user}} 님 안녕하세요
+      <a href="{% url 'members:signout' %}" class="btn btn-primary">로그아웃</a>
+      
+      {% else %}
+      <a href="{% url 'members:signin' %}" class="btn btn-primary">로그인</a>
+      {% endif %}
+    </div>
+      
 </header>    
     {% if request.session.user %}
     <ul class="container">

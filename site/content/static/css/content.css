@@ -2,14 +2,35 @@ header {
     background-color: rgb(145, 212, 44);
     color : blue;
     display: flex;
-    justify-content: space-between;
-   
-    
-    
+    justify-content: space-between;   
+}
+
+.search {
+    margin : 1rem;
+}
+
+select {
+    border-radius: 5px;
+    border-color: rgb(145, 212, 44);
+}
+
+.butt {
+    width: 100px;
+    background-color: rgb(145, 212, 44);
+    border: none;
+    width: auto;
+}
+.si {
+    margin: 1rem;
     
 }
 
-
+.btn {
+    color: black;
+    background-color: yellow;
+    border-color: yellow;
+    
+}
 .container {
 
         background:beige;
@@ -33,13 +54,7 @@ header {
     flex-direction: column;
 }
 
-.btn {
-    width: 100px;
-    color: black;
-    
-    
-    
-}
+
 
 h1 {
     display : inline-block;
@@ -60,9 +75,6 @@ body {
 }
 
 
-.butt {
-    background-color: blue;
-}
 
 img {
     width : 100%;
