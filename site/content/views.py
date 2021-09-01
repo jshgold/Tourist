@@ -10,15 +10,28 @@ def tourlist(request):
         
         data= Content.objects.filter(yea=2010)
 
-def search(request):
-            
-    if request.method == 'GET':
+
+
+def home(request):
+    if request.method == "GET":
         if request.session.get('user',''):
             juso=[]
             year=[]
             month=[]
-            con = pymysql.connect(host="127.0.0.1",user="root",password="1234",db="site",charset="utf8")
+            con = pymysql.connect(host="127.0.0.1" ,user="root" ,password="1234" ,db="site",charset="utf8")
             cur = con.cursor()
+            sql = 'SELECT tourimg,spot FROM datas'
+            cur.execute(sql)
+            row=list(cur.fetchall())
+            random.shuffle(row)
+            lst=[]
+            count=0
+            for ro in row:
+                if count==6:
+                    break
+                lst.append(ro)
+                count+=1
+
             sql = "SELECT dep FROM datas"
             cur.execute(sql)
             while(True):
@@ -48,14 +61,12 @@ def search(request):
                 elif row.startswith("서울"):
                     row=row.replace(row[:space],"서울특별시")
                     space=row.find(" ")
-
                 elif row.startswith("제주"):
                     row=row.replace(row[:space],"제주시")
                     space=row.find(" ")
                 elif row.startswith("강원"):
                     row=row.replace(row[:space],"강원도")
                     space=row.find(" ")
-
                 if row[:space] not in juso:
                     juso.append(row[:space])
             cur = con.cursor()
@@ -68,7 +79,6 @@ def search(request):
                 row=row[0]
                 if row not in year:
                     year.append(row)
-
             cur = con.cursor()
             sql = "SELECT mont FROM datas"
             cur.execute(sql)
@@ -82,11 +92,11 @@ def search(request):
             juso.sort()
             month.sort()
             year.sort()
-            return render(request, 'content/search.html',{"searchs":juso,"years":year,"monthes":month})
+            return render(request, 'content/home.html',{"searchs":juso,"years":year,"monthes":month,"rows":lst})
         else:
             return redirect('/signin')
 
-    elif request.method =="POST":
+    if request.method == "POST":
         plist=[]
         clist=[]
         tlist=[]
@@ -157,27 +167,12 @@ def search(request):
         
         return render(request,'content/result.html',{"places":total})
 
-def home(request):
-    
-    con = pymysql.connect(host="127.0.0.1" ,user="root" ,password="1234" ,db="site",charset="utf8")
-    cur = con.cursor()
-    sql = 'SELECT tourimg,spot FROM datas'
-    cur.execute(sql)
-    row=list(cur.fetchall())
-    random.shuffle(row)
-    lst=[]
-    count=0
-    for ro in row:
-        if count==6:
-            break
-        lst.append(ro)
-        count+=1
 
     
     
 
     
-    return render(request,"content/home.html",{"rows":lst})
+    
             
 
 
