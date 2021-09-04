@@ -53,31 +53,29 @@
       
 </header>    
     {% if request.session.user %}
-    <ul class="container">
-    
-    {% for row in rows %}
-        <li class="item">
-          <a href="">
-            
-            {% for ro in row %}
-            
-            {% if 'https://' in ro %}
-            <img src='{{ ro }}'>
-            {% else %}
-            <br>
-            <p id="spotname">{{ ro }}</p>
-            {% endif %}
-        
-            {% endfor %}
-          </a>
-        </li>
-    {% endfor %} 
-    </ul>   
-    {% endif %}
+    <div class="random">
+      <ul class="container">
+      
+      {% for row in rows %}
+          <li class="item">
+            <a href="{% url 'contents:detail' %}">
+              
+              {% for ro in row %}
+              
+              {% if 'https://' in ro %}
+              <img src='{{ ro }}'>
+              {% else %}
+              <br>
+              <p id="spotname">{{ ro }}</p>
+              {% endif %}
+          
+              {% endfor %}
+            </a>
+          </li>
+      {% endfor %} 
+      </ul>   
+      {% endif %}
+    </div>
 
-    
-
-
-    
 {% endblock %}
 

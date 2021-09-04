@@ -168,6 +168,12 @@ def home(request):
         return render(request,'content/result.html',{"places":total})
 
 
+
+def detail(request):
+
+    return render(request,'content/detail.html')
+
+
     
     
 
