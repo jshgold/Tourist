@@ -3,8 +3,12 @@
 
 
 {% block title %}
+
 {% endblock %}
 
 
 {% block content %}
+  {% for i in rows %}
+    <p>{{ i }}</p>
+  {% endfor %}
 {% endblock %}

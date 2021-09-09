@@ -31,7 +31,9 @@ def home(request):
                     break
                 lst.append(ro)
                 count+=1
-
+            
+            
+            
             sql = "SELECT dep FROM datas"
             cur.execute(sql)
             while(True):
@@ -170,8 +172,20 @@ def home(request):
 
 
 def detail(request):
+    if request.method=="GET":
+        spotname= request.GET.get('spotname','')
+        con = pymysql.connect(host="127.0.0.1",user="root",password="1234",db="site",charset="utf8")
+        cur=con.cursor()
+        sql= "SELECT tourimg,spot,cont,dep FROM datas WHERE spot = %s"
+        cur.execute(sql,(spotname))
+        row=cur.fetchall()
 
-    return render(request,'content/detail.html')
+        return render(request,'content/detail.html',{"rows":row})
+    
+
+   
+
+
 
 
     
