@@ -26,11 +26,13 @@ def home(request):
             random.shuffle(row)
             
             lst=[]
+            
             count=0
             for ro in row:
                 if count==6:
                     break
                 lst.append(ro)
+                
                 count+=1
             
             
@@ -177,7 +179,7 @@ def detail(request,spot):
         spotname = spot
         con = pymysql.connect(host="127.0.0.1",user="root",password="1234",db="site",charset="utf8")
         cur=con.cursor()
-        sql= "SELECT tourimg,spot,cont,dep FROM datas WHERE spot = %s"
+        sql= "SELECT tourimg,spot,cont,dep FROM datas WHERE spot = %s "
         cur.execute(sql,(spotname))
         row=cur.fetchall()
         return render(request,'content/detail.html',{"rows":row})

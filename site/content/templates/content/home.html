@@ -53,14 +53,7 @@
       
 </header>    
     {% if request.session.user %}
-    <script>
-      function test(ths){
-              var hello = $(ths).text();
-              $('#kind').val(hello);
-      }
-      let da=$("#spotname").text();
-       
-    </script>
+    
     <div class="random">
       <ul class="container">
         
@@ -68,18 +61,18 @@
       {% for row in rows %}
           <li class="item">
             {% for ro in row %}
-            
+
               
+                {% if "https://" in ro %}
+                  <img src='{{ ro }}'>
+                {% else %}
+                <br>
+                <a href="{% url 'contents:detail' spot=ro %}" >
               
+                  <p id="spotname">{{ ro }} </p>
+                </a>
+                {% endif %}
               
-              {% if "https://" in ro %}
-              <img src='{{ ro }}'>
-              {% else %}
-              <br>
-              <a href="{% url 'contents:detail' spot=ro %}" >
-              <p id="spotname">{{ ro }} </p>
-              </a>
-              {% endif %}
               
               
            
