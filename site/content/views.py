@@ -24,6 +24,7 @@ def home(request):
             cur.execute(sql)
             row=list(cur.fetchall())
             random.shuffle(row)
+            
             lst=[]
             count=0
             for ro in row:
@@ -171,16 +172,20 @@ def home(request):
 
 
 
-def detail(request):
-    if request.method=="GET":
-        spotname= request.GET.get('spotname','')
+def detail(request,spot):
+
+        spotname = spot
         con = pymysql.connect(host="127.0.0.1",user="root",password="1234",db="site",charset="utf8")
         cur=con.cursor()
         sql= "SELECT tourimg,spot,cont,dep FROM datas WHERE spot = %s"
         cur.execute(sql,(spotname))
         row=cur.fetchall()
-
         return render(request,'content/detail.html',{"rows":row})
+    
+    
+
+
+        
     
 
    

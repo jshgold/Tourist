@@ -8,7 +8,21 @@
 
 
 {% block content %}
-  {% for i in rows %}
-    <p>{{ i }}</p>
+  {%if rows == '' %}
+    <p>없음</p>
+  {% else %}
+  {% for row in rows %}
+    {% for ro in row %}
+      <div>
+        {% if 'https://' in ro %}
+          <img src={{ ro }}></img>
+        {% else %}
+          <p>{{ ro }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    
   {% endfor %}
+  {% endif %}
+
 {% endblock %}
